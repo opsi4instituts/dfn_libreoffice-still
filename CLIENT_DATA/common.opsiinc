@@ -1,0 +1,46 @@
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib
+; and published under the Terms of the General Public License.
+; credits: http://www.opsi.org/credits/
+requiredWinstVersion >= "4.11.4.3"
+
+DefVar $RegPathUninstall$
+DefVar $MsiFile$
+DefVar $MsiFileHelpPack$
+DefVar $LogDir$
+DefVar $ProductId$
+DefVar $MinimumSpace$
+DefVar $InstallDir$
+DefVar $ExitCode$
+DefVar $registerMso$
+DefVar $CustomPostInstall$
+DefVar $CustomPostUninstall$
+DefVar $DesktopIcon$
+DefVar $SearchPattern$
+DefVar $ProductName$
+DefVar $RegId$
+DefVar $PathToExe$
+DefVar $Launcher$
+DefStringlist $ResultList$
+DefStringList $InstallDirs$
+
+Set $LogDir$ = "%opsiLogDir%"
+
+; ----------------------------------------------------------------
+; - Please edit the following values                             -
+; ----------------------------------------------------------------
+Set $ProductId$	= "libreoffice"
+Set $ProductName$       = "LibreOffice"
+Set $MinimumSpace$	= "400 MB"
+Set $RegPathUninstall$	= "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
+Set $MsiFile$		= "LibreOffice_4.4.6_Win_x86.msi"
+Set $MsiFileHelpPack$	= "LibreOffice_4.4.6_Win_x86_helppack_de.msi"
+ ;die .exe, welche als Desktopicon hinzugefügt werden kann.
+Set $Launcher$      = "\program\soffice.exe"
+Set $SearchPattern$     = $ProductName$
+; ----------------------------------------------------------------
+
+setloglevel = 6
+
+include_append "section_sub_check_exitcode.opsiinc"
+include_append "section_sub_search_registry32_uninstall_keys.opsiinc"

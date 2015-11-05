@@ -1,0 +1,97 @@
+[Package]
+version: 1
+depends: 
+incremental: False
+
+[Product]
+type: localboot
+id: dfn_libreoffice-still
+name: LibreOffice Still
+description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
+advice: 
+version: 4.4.6
+priority: 0
+licenseRequired: False
+productClasses: 
+setupScript: setup.opsiscript
+uninstallScript: uninstall.opsiscript
+updateScript: 
+alwaysScript: 
+onceScript: 
+customScript: 
+userLoginScript: 
+
+[ProductProperty]
+type: unicode
+name: register-mso
+multivalue: False
+editable: False
+description: Dateizuordnungen für Microsoft Office Dokumente (z.B. .doc) auf LibreOffice einstellen?
+values: ["no", "yes"]
+default: ["no"]
+
+[ProductProperty]
+type: unicode
+name: custom-post-install
+multivalue: False
+editable: False
+description: Define filename for include script in custom directory after
+ installation
+values: ["none", "post-install.opsiinc"]
+default: ["none"]
+
+[ProductProperty]
+type: unicode
+name: custom-post-deinstall
+multivalue: False
+editable: False
+description: Define filename for include script in custom directory after
+ deinstallation
+values: ["none", "post-deinstall.opsiinc"]
+default: ["none"]
+
+[ProductProperty]
+type: unicode
+name: desktopicon
+multivalue: False
+editable: False
+description: Define filename for include script in custom directory after
+ deinstallation
+values: ["no", "yes"]
+default: ["no"]
+
+[Changelog]
+dfn_libreoffice-still (4.4.6-1)
+	* neue Upstreamversion
+	* Umbennenung Paket 'dfn_libreoffice' -> 'dfn_libreoffice-still'
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 05.11.2015
+
+dfn_libreoffice (4.4.5-1)
+	* initiales DFN-Paket
+-- Lukas Stapelbroek (archIT/KIT) <lukas.stapelbroek9@kit.edu>, 29.09.2015
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

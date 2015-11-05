@@ -1,0 +1,61 @@
+; Copyright (c) uib gmbh (www.uib.de)
+; This sourcecode is owned by uib gmbh
+; and published under the Terms of the General Public License.
+; credits: http://www.opsi.org/credits/
+
+; Parameter: $SearchPattern$: Suchbegriff in Registry
+Set $SearchPattern$ = $ProductName$
+
+Sub_search_registry32_uninstall_keys
+; Rückgabewert: $ResultList$ gefundene Einträge
+
+if (count ($ResultList$) = "0")
+	comment "No installations of " + $SearchPattern$ + " found in registry"
+else
+	comment "Found at least one installation of " + $SearchPattern$ + " in registry, try to deinstall"
+	
+	for %s% in $ResultList$ do Sub_safeInstallDirs
+	
+	; mehr als eine Datei zu deinstallieren (Das Programm und die help-files)
+	comment "Uninstalling found programs"
+	for %s% in $ResultList$ do Winbatch_uninstall
+	
+	set $DesktopIcon$ = getProductProperty("desktopicon","no")
+
+	if $DesktopIcon$ = "yes"
+		comment "Delete common desktop icon"
+		Linkfolder_uninstall_desktopicon
+	endif
+
+	comment "include custom post install file"
+	set $CustomPostUninstall$ = getProductProperty("custom-post-deinstall","none")
+	if not ($CustomPostUninstall$ = "none")
+		if FileExists("%ScriptPath%\custom\" + $CustomPostUninstall$)
+			include_insert "%ScriptPath%\custom\" + $CustomPostUninstall$
+		endif
+	endif
+	
+	; löschen der vorher gefundenen Ordner
+	for %s% in $InstallDirs$ do Files_uninstall
+endif
+
+
+[Sub_uninstall]
+	Winbatch_uninstall
+	sub_check_exitcode
+
+[Winbatch_uninstall]
+	msiexec /x %s% /qn REBOOT=ReallySuppress
+
+; Der Installer räumt nicht richtig auf
+[Files_uninstall]
+	delete -sf "%s%"
+
+; Speicherung der gefundenen Verzeichnisse
+[Sub_safeInstallDirs]
+	Set $InstallDirs$ = addtolist($InstallDirs$, GetRegistryStringValue32("[" + $RegPathUninstall$ + "\%s%] InstallLocation"))
+
+[Linkfolder_uninstall_desktopicon]
+	set_basefolder common_desktopdirectory
+	set_subfolder ""
+	delete_element $ProductName$
