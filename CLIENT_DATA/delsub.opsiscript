@@ -45,7 +45,7 @@ endif
 	sub_check_exitcode
 
 [Winbatch_uninstall]
-	msiexec /x %s% /qn REBOOT=ReallySuppress
+	msiexec /x %s% $MsiSilentOption$ REBOOT=ReallySuppress
 
 ; Der Installer räumt nicht richtig auf
 [Files_uninstall]

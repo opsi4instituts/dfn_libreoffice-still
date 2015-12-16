@@ -23,20 +23,30 @@ DefVar $PathToExe$
 DefVar $Launcher$
 DefStringlist $ResultList$
 DefStringList $InstallDirs$
+DefVar $INST_SystemType$
+DefVar $INST_architecture$
+DefVar $MSVersion$
+DefVar $MsiSilentOption$
 
 Set $LogDir$ = "%opsiLogDir%"
+
+Set $INST_SystemType$ = GetSystemType
+Set $MSVersion$	 = GetMsVersionInfo
+set $INST_architecture$ = GetProductProperty("install_architecture","system specific")
+
+Set $MsiSilentOption$ = GetProductProperty("msi-silent-option","/qb!")
 
 ; ----------------------------------------------------------------
 ; - Please edit the following values                             -
 ; ----------------------------------------------------------------
 Set $ProductId$	= "libreoffice"
 Set $ProductName$       = "LibreOffice"
-Set $MinimumSpace$	= "400 MB"
+Set $MinimumSpace$	= "600 MB"
 Set $RegPathUninstall$	= "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-Set $MsiFile$		= "LibreOffice_4.4.6_Win_x86.msi"
-Set $MsiFileHelpPack$	= "LibreOffice_4.4.6_Win_x86_helppack_de.msi"
+Set $MsiFile$		= "LibreOffice_4.4.7_Win_x86.msi"
+Set $MsiFileHelpPack$	= "LibreOffice_4.4.7_Win_x86_helppack_de.msi"
  ;die .exe, welche als Desktopicon hinzugefügt werden kann.
-Set $Launcher$      = "\program\soffice.exe"
+Set $Launcher$          = "\program\soffice.exe"
 Set $SearchPattern$     = $ProductName$
 ; ----------------------------------------------------------------
 
@@ -44,3 +54,10 @@ setloglevel = 6
 
 include_append "section_sub_check_exitcode.opsiinc"
 include_append "section_sub_search_registry32_uninstall_keys.opsiinc"
+
+if not ($MSVersion$ = "6.1" OR $MSVersion$ = "10.0")
+	Logwarning "Only tested with windows 7 and 10! Please report to the maintainer successful installation on other windows versions."		
+endif
+if not ($INST_SystemType$ = "64 Bit System")
+	Logwarning "Only tested with 64 bit version! Please report to the maintainer successful installation on other windows versions."
+endif

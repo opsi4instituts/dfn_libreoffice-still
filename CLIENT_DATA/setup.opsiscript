@@ -71,10 +71,10 @@ endif
 
 ;$registerMso$ gibt an, ob MSO-Dateien automatisch erkannt werden sollen
 [Winbatch_install_main]
-msiexec /qn /i "%ScriptPath%\$MsiFile$" /l* "$LogDir$\$MsiFile$.install_log.txt" REGISTER_$registerMso$_MSO_TYPES=1 ISCHECKFORPRODUCTUPDATES=0 CREATEDESKTOPLINK=0 RebootYesNo=No ADDLOCAL=ALL REMOVE=gm_o_Onlineupdate
+msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFile$" /l* "$LogDir$\$MsiFile$.install_log.txt" REGISTER_$registerMso$_MSO_TYPES=1 ISCHECKFORPRODUCTUPDATES=0 CREATEDESKTOPLINK=0 RebootYesNo=No ADDLOCAL=ALL REMOVE=gm_o_Onlineupdate
 
 [Winbatch_install_help]
-msiexec /qn /i "%ScriptPath%\$MsiFileHelpPack$" /l* "$LogDir$\$MsiFileHelpPack$.install_log.txt"
+msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFileHelpPack$" /l* "$LogDir$\$MsiFileHelpPack$.install_log.txt"
 
 
 [Linkfolder_install_desktopicon]
