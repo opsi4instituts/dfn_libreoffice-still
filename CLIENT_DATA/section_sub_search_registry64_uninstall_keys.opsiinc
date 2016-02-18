@@ -1,11 +1,11 @@
-[Sub_search_registry32_uninstall_keys]
+[Sub_search_registry64_uninstall_keys]
 
 DefStringList $TempList$
-; ResultList _hier_ nicht löschen, damit evtl. zuvor gefundene (64-Bit) nicht gelöscht werden
-;Set $ResultList$ = emptylist ($ResultList$)
+; "Unset" erforderlich, da evtl. dieses Sub mehrmals genutzt wird und alte Werte in der Liste sein könnten
+Set $ResultList$ = emptylist ($ResultList$)
 
 ; reg query liefert alle Zeilen, in denen Searchpattern gefunden wird, auch z.B. DisplayName
-Set $TempList$ = getOutStreamFromSection ("execWith_registry32_query '%System%\cmd.exe' /C")
+Set $TempList$ = getOutStreamFromSection ("execWith_registry64_query '%SystemRoot%\cmd64.exe' /C")
 ; wir wollen aber nur die Zeilen haben, in denen der RegPath enthalten ist, um z.B. eine MSI-ID zu erhalten
 Set $TempList$ = getListContaining($TempList$,$RegPathUninstall$)
 ; gehe alle Zeilen durch und nimm die Werte nach dem letzten Backslash
@@ -13,7 +13,7 @@ if not ( count ($TempList$) = "0" )
 	for %s% in $TempList$ do Set $ResultList$ = addtolist($ResultList$, takeString (-1,splitString("%s%", '\')))
 endif
 
-[execWith_registry32_query]
+[execWith_registry64_query]
 @echo off
 reg query "$RegPathUninstall$" /s /f "$SearchPattern$"
 

@@ -3,9 +3,9 @@
 ; and published under the Terms of the General Public License.
 ; credits: http://www.opsi.org/credits/
 
-; Parameter: $SearchPattern$: Suchbegriff in Registry
-Set $SearchPattern$ = $ProductName$
-
+; Parameter: $SearchPattern$
+Sub_search_registry64_uninstall_keys
+; bei 32-Bit ResultList nicht löschen, damit alle Ergebnisse ggf. gelöscht werden
 Sub_search_registry32_uninstall_keys
 ; Rückgabewert: $ResultList$ gefundene Einträge
 

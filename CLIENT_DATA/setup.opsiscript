@@ -12,7 +12,7 @@ if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
 	isFatalError
 	; Stop process and set installation status to failed
 else
-	Message "Installing %installingProdName% (%installingProdVersion%) 32 Bit..."	
+	Message "Installing %installingProdName% (%installingProdVersion%) 64 Bit..."	
 	
 	comment "Show product picture"
 	ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $ProductName$
@@ -41,9 +41,7 @@ else
 	comment "Test for installation success"
 	
 	; Parameter: $SearchPattern$: Suchbegriff in Registry
-	Set $SearchPattern$ = $ProductName$
-	
-	Sub_search_registry32_uninstall_keys
+	Sub_search_registry64_uninstall_keys
 	; Rückgabewert: $ResultList$ gefundene Einträge
 	if ( count ($ResultList$) = "0" )
 		logError "Fatal: After Installation " + $ProductName$ + " could not be found in " + $RegPathUninstall$
@@ -51,7 +49,7 @@ else
 	else
 		Set $RegId$ = takeString(0, $ResultList$)
 		comment "Get 'InstallLocation' from registry for path to exe"
-		Set $InstallDir$ = GetRegistryStringValue32("[" + $RegPathUninstall$ + "\" + $RegId$ + "] InstallLocation")
+		Set $InstallDir$ = GetRegistryStringValue64("[" + $RegPathUninstall$ + "\" + $RegId$ + "] InstallLocation")
 		Set $PathToExe$ = $InstallDir$ + $Launcher$
 		set $DesktopIcon$ = getProductProperty("desktopicon","no")
 		if $DesktopIcon$ = "yes"
@@ -71,7 +69,7 @@ endif
 
 ;$registerMso$ gibt an, ob MSO-Dateien automatisch erkannt werden sollen
 [Winbatch_install_main]
-msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFile$" /l* "$LogDir$\$MsiFile$.install_log.txt" REGISTER_$registerMso$_MSO_TYPES=1 ISCHECKFORPRODUCTUPDATES=0 CREATEDESKTOPLINK=0 RebootYesNo=No ADDLOCAL=ALL REMOVE=gm_o_Onlineupdate
+msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFile$" /l* "$LogDir$\$MsiFile$.install_log.txt" UI_LANGS=$UILangs$ REGISTER_$registerMso$_MSO_TYPES=1 ISCHECKFORPRODUCTUPDATES=0 CREATEDESKTOPLINK=0 RebootYesNo=No ADDLOCAL=ALL REMOVE=gm_o_Onlineupdate
 
 [Winbatch_install_help]
 msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFileHelpPack$" /l* "$LogDir$\$MsiFileHelpPack$.install_log.txt"

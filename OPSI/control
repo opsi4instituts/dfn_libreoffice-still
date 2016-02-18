@@ -1,5 +1,5 @@
 [Package]
-version: 2
+version: 1
 depends: 
 incremental: False
 
@@ -9,7 +9,7 @@ id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 4.4.7
+version: 5.0.5
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -68,7 +68,22 @@ description: Un/Install MSI silent (/qb!) or very silent (/qn)
 values: ["/qb!", "/qn"]
 default: ["/qb!"]
 
+[ProductProperty]
+type: unicode
+name: ui-langs
+multivalue: False
+editable: True
+description: Define which UI languages should be activated on installation. Add other country abbreviations, separated with comma (https://wiki.documentfoundation.org/Deployment_and_Migration)
+values: ["de,en_GB"]
+default: ["de,en_GB"]
+
 [Changelog]
+dfn_libreoffice-still (5.0.5-1)
+	* neue Upstreamversion
+	* Wechsel von 32- auf 64-Bit-Version (Deinstallation auch von 32-Bit, Installation nur 64-Bit)
+	* Produktproperty 'ui-langs' hinzugefügt
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 17.02.2016
+
 dfn_libreoffice-still (4.4.7-2)
 	* neue Upstreamversion
 	* ProductProperty 'msi_silent_option' hinzugefügt
@@ -83,6 +98,18 @@ dfn_libreoffice-still (4.4.6-1)
 dfn_libreoffice (4.4.5-1)
 	* initiales DFN-Paket
 -- Lukas Stapelbroek (archIT/KIT) <lukas.stapelbroek9@kit.edu>, 29.09.2015
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
