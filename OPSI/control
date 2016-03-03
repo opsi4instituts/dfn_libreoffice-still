@@ -1,5 +1,5 @@
 [Package]
-version: 1
+version: 2
 depends: 
 incremental: False
 
@@ -20,6 +20,12 @@ alwaysScript:
 onceScript: 
 customScript: 
 userLoginScript: 
+
+[ProductDependency]
+action: setup
+requiredProduct: dfn_jre
+requiredStatus: installed
+requirementType: before
 
 [ProductProperty]
 type: unicode
@@ -77,7 +83,22 @@ description: Define which UI languages should be activated on installation. Add 
 values: ["de,en_GB"]
 default: ["de,en_GB"]
 
+[ProductProperty]
+type: unicode
+name: custom-extensions
+multivalue: False
+editable: False
+description: Install Custom Extensions (*.oxt files) from /var/lib/opsi/depot/dfn_libreoffice-still/custom/extensions?
+values: ["no", "yes"]
+default: ["no"]
+
 [Changelog]
+dfn_libreoffice-still (5.0.5-2)
+	* Möglichkeit zur Installation von Extensions hinzugefügt (Produktproperty; über Ordner 'extensions' in 'custom')
+	* delsub umgebaut und aufgeräumt, Unterscheidung ResultList32 und 64 wegen InstallDir aus Registry
+	* Produktabhängigkeit 'dfn_jre' hinzugefügt
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 03.03.2016
+
 dfn_libreoffice-still (5.0.5-1)
 	* neue Upstreamversion
 	* Wechsel von 32- auf 64-Bit-Version (Deinstallation auch von 32-Bit, Installation nur 64-Bit)
@@ -98,6 +119,18 @@ dfn_libreoffice-still (4.4.6-1)
 dfn_libreoffice (4.4.5-1)
 	* initiales DFN-Paket
 -- Lukas Stapelbroek (archIT/KIT) <lukas.stapelbroek9@kit.edu>, 29.09.2015
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

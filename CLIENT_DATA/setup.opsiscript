@@ -42,15 +42,17 @@ else
 	
 	; Parameter: $SearchPattern$: Suchbegriff in Registry
 	Sub_search_registry64_uninstall_keys
-	; Rückgabewert: $ResultList$ gefundene Einträge
-	if ( count ($ResultList$) = "0" )
+	; Rückgabewert: $ResultList64$ gefundene Einträge
+	if ( count ($ResultList64$) = "0" )
 		logError "Fatal: After Installation " + $ProductName$ + " could not be found in " + $RegPathUninstall$
 		isFatalError
 	else
-		Set $RegId$ = takeString(0, $ResultList$)
+		Set $RegId$ = takeString(0, $ResultList64$)
 		comment "Get 'InstallLocation' from registry for path to exe"
 		Set $InstallDir$ = GetRegistryStringValue64("[" + $RegPathUninstall$ + "\" + $RegId$ + "] InstallLocation")
 		Set $PathToExe$ = $InstallDir$ + $Launcher$
+		Set $PathToUnopkg$ = $InstallDir$ + "\program\unopkg.exe"
+		
 		set $DesktopIcon$ = getProductProperty("desktopicon","no")
 		if $DesktopIcon$ = "yes"
 			comment "Create common desktop icon"
@@ -64,6 +66,21 @@ else
 				include_insert "%ScriptPath%\custom\" + $CustomPostInstall$	
 			endif
 		endif
+		
+		comment "Install Extensions if enabled and available"
+		set $CustomExtensions$ = getProductProperty("custom-extensions","no")
+		if ($CustomExtensions$ = "yes")
+			if FileExists ($OxtDir$)
+				Set $OxtList$ =  getOutStreamFromSection ("execWith_dir_oxt '%System%\cmd.exe' /C")
+				if ( count ($OxtList$) = "0")
+					Logwarning "No extensions (*.oxt) found for installation in $OxtDir$"
+				else
+					for %o% in $OxtList$ do Winbatch_install_oxt
+				endif
+			else
+				LogWarning "Directory $OxtDir$ not found! Unable to install extensions!" 
+			endif
+		endif
 	endif
 endif
 
@@ -74,6 +91,12 @@ msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFile$" /l* "$LogDir$\$MsiFile$.in
 [Winbatch_install_help]
 msiexec $MsiSilentOption$ /i "%ScriptPath%\$MsiFileHelpPack$" /l* "$LogDir$\$MsiFileHelpPack$.install_log.txt"
 
+[execWith_dir_oxt]
+@echo off
+dir /b "$OxtDir$\*.oxt" 2> null
+
+[Winbatch_install_oxt]
+"$PathToUnopkg$" add --suppress-license --shared "$OxtDir$\%o%"
 
 [Linkfolder_install_desktopicon]
 set_basefolder common_desktopdirectory

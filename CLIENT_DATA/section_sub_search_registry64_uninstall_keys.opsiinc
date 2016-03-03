@@ -2,7 +2,7 @@
 
 DefStringList $TempList$
 ; "Unset" erforderlich, da evtl. dieses Sub mehrmals genutzt wird und alte Werte in der Liste sein könnten
-Set $ResultList$ = emptylist ($ResultList$)
+Set $ResultList64$ = emptylist ($ResultList64$)
 
 ; reg query liefert alle Zeilen, in denen Searchpattern gefunden wird, auch z.B. DisplayName
 Set $TempList$ = getOutStreamFromSection ("execWith_registry64_query '%SystemRoot%\cmd64.exe' /C")
@@ -10,7 +10,19 @@ Set $TempList$ = getOutStreamFromSection ("execWith_registry64_query '%SystemRoo
 Set $TempList$ = getListContaining($TempList$,$RegPathUninstall$)
 ; gehe alle Zeilen durch und nimm die Werte nach dem letzten Backslash
 if not ( count ($TempList$) = "0" ) 
-	for %s% in $TempList$ do Set $ResultList$ = addtolist($ResultList$, takeString (-1,splitString("%s%", '\')))
+	; zusätzliche Filterung, da ein anderes Paket auch auf den Suchbegriff anspringen könnte
+	for %s% in $TempList$ do Sub_filter_result64
+endif
+
+[Sub_filter_result64]
+; gehe alle Zeilen durch und nimm die Werte nach dem letzten Backslash, aber nur wenn $ProductId$ enthalten ist oder eine MSI-ID erkannt wird
+; Installer oder bei 'files_install' sollte die $ProductId$ enthalten sein
+if (contains("%s%", $ProductId$))
+	Set $ResultList64$ = addtolist($ResultList64$, takeString (-1,splitString("%s%", '\')))
+endif
+; eine MSI-ID wie z.B. {23170F69-40C1-2702-1512-000001000000} enthält immer diese spezifischen Zeichen: { - }
+if (contains("%s%", "{") AND contains("%s%", "-") AND contains("%s%", "}"))
+	Set $ResultList64$ = addtolist($ResultList64$, takeString (-1,splitString("%s%", '\')))
 endif
 
 [execWith_registry64_query]

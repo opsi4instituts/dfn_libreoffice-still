@@ -25,12 +25,16 @@ DefVar $ProductName$
 DefVar $RegId$
 DefVar $PathToExe$
 DefVar $Launcher$
-DefStringlist $ResultList$
-DefStringList $InstallDirs$
+DefStringList $ResultList32$
+DefStringList $ResultList64$
 DefVar $INST_SystemType$
 DefVar $MSVersion$
 DefVar $MsiSilentOption$
 DefVar $UILangs$
+DefStringList $OxtList$
+DefVar $OxtDir$
+DefVar $PathToUnopkg$
+DefVar $CustomExtensions$
 
 Set $LogDir$ = "%opsiLogDir%"
 
@@ -54,6 +58,7 @@ Set $MsiFile$		= "LibreOffice_" + $ProductVersion$ + "_Win_x64.msi"
 Set $MsiFileHelpPack$	= "LibreOffice_" + $ProductVersion$ + "_Win_x64_helppack_de.msi"
  ;die .exe, welche als Desktopicon hinzugefügt werden kann.
 Set $Launcher$          = "\program\soffice.exe"
+Set $OxtDir$	= "%ScriptPath%\custom\extensions"
 ; ----------------------------------------------------------------
 
 include_append "check_msi_exitcode.opsiinc"
