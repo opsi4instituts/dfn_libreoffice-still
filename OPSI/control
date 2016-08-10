@@ -1,5 +1,5 @@
 [Package]
-version: 2
+version: 1
 depends: 
 incremental: False
 
@@ -9,7 +9,7 @@ id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 5.0.5
+version: 5.1.5
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -93,6 +93,14 @@ values: ["no", "yes"]
 default: ["no"]
 
 [Changelog]
+dfn_libreoffice-still (5.1.5-1)
+	* neue Upstreamversion
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 03.08.2016
+
+dfn_libreoffice-still (5.0.6-1)
+	* neue Upstreamversion
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 09.05.2016
+
 dfn_libreoffice-still (5.0.5-2)
 	* Möglichkeit zur Installation von Extensions hinzugefügt (Produktproperty; über Ordner 'extensions' in 'custom')
 	* delsub umgebaut und aufgeräumt, Unterscheidung ResultList32 und 64 wegen InstallDir aus Registry
@@ -119,57 +127,6 @@ dfn_libreoffice-still (4.4.6-1)
 dfn_libreoffice (4.4.5-1)
 	* initiales DFN-Paket
 -- Lukas Stapelbroek (archIT/KIT) <lukas.stapelbroek9@kit.edu>, 29.09.2015
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
