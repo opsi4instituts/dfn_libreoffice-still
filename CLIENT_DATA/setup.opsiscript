@@ -15,7 +15,7 @@ else
 	Message "Installing %installingProdName% (%installingProdVersion%) 64 Bit..."	
 	
 	comment "Show product picture"
-	ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $ProductName$
+	ShowBitmap "%ScriptPath%\o4i.png" $ProductName$
 	
 	if FileExists("%ScriptPath%\delsub.opsiscript")
 		comment "Start uninstall sub section"

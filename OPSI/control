@@ -9,7 +9,7 @@ id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 5.1.5
+version: 5.2.7
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -93,6 +93,26 @@ values: ["no", "yes"]
 default: ["no"]
 
 [Changelog]
+dfn_libreoffice-still (5.2.7-1)
+        * neue Upstreamversion
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 05.05.2017
+
+dfn_libreoffice-still (5.2.6-1)
+        * neue Upstreamversion
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 10.03.2017
+
+dfn_libreoffice-still (5.2.5-1)
+	* neue Upstreamversion (5.1.x zu 5.2.x)
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 03.02.2017
+
+dfn_libreoffice-still (5.1.6-2)
+	* o4i-Logo
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 02.11.2016
+
+dfn_libreoffice-still (5.1.6-1)
+	* neue Upstreamversion
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 02.11.2016
+
 dfn_libreoffice-still (5.1.5-1)
 	* neue Upstreamversion
  -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 03.08.2016
