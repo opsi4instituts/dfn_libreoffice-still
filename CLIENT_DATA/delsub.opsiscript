@@ -1,8 +1,3 @@
-; Copyright (c) uib gmbh (www.uib.de)
-; This sourcecode is owned by uib gmbh
-; and published under the Terms of the General Public License.
-; credits: http://www.opsi.org/credits/
-
 ; Parameter: $SearchPattern$
 ; separate ResultList32 bzw. 64 damit später die InstallDir aus dem richtigen Registryzweig geholt werden kann
 Sub_search_registry64_uninstall_keys
@@ -23,10 +18,9 @@ else
 		for %s% in $ResultList64$ do Sub_uninstall64
 	endif
 	
-	set $DesktopIcon$ = getProductProperty("desktopicon","no")
-	if $DesktopIcon$ = "yes"
-		comment "Delete common desktop icon"
-		Linkfolder_uninstall_desktopicon
+	if $DesktopLink$ = "true"
+		comment "Delete common desktop link"
+		Linkfolder_delete_desktoplink
 	endif
 
 	comment "include custom post install file"
@@ -68,7 +62,7 @@ msiexec /x $RegId$ $MsiSilentOption$ REBOOT=ReallySuppress
 [Files_uninstall]
 delete -sf "$InstallDir$"
 
-[Linkfolder_uninstall_desktopicon]
+[Linkfolder_delete_desktoplink]
 set_basefolder common_desktopdirectory
 set_subfolder ""
 delete_element $ProductName$

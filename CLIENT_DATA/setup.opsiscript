@@ -1,8 +1,3 @@
-; Copyright (c) uib gmbh (www.uib.de)
-; This sourcecode is owned by uib
-; and published under the Terms of the General Public License.
-; credits: http://www.opsi.org/credits/
-
 [Actions]
 
 include_insert "common.opsiinc"
@@ -12,16 +7,13 @@ if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
 	isFatalError
 	; Stop process and set installation status to failed
 else
-	Message "Installing %installingProdName% (%installingProdVersion%) 64 Bit..."	
-	
-	comment "Show product picture"
-	ShowBitmap "%ScriptPath%\o4i.png" $ProductName$
-	
 	if FileExists("%ScriptPath%\delsub.opsiscript")
 		comment "Start uninstall sub section"
 		Sub "%ScriptPath%\delsub.opsiscript"
 	endif
-	
+
+	Message "Installing %installingProdName% (%installingProdVersion%) 64 Bit..."
+
 	comment "Start setup program"
 	Set $registerMso$ = getProductProperty("register-mso","")
 	if ( $registerMso$ = "no")
@@ -53,10 +45,9 @@ else
 		Set $PathToExe$ = $InstallDir$ + $Launcher$
 		Set $PathToUnopkg$ = $InstallDir$ + "\program\unopkg.exe"
 		
-		set $DesktopIcon$ = getProductProperty("desktopicon","no")
-		if $DesktopIcon$ = "yes"
-			comment "Create common desktop icon"
-			Linkfolder_install_desktopicon
+		if $DesktopLink$ = "true"
+			comment "Create common desktop link"
+			Linkfolder_create_desktoplink
 		endif
 		
 		comment "include custom post install file"
@@ -98,7 +89,7 @@ dir /b "$OxtDir$\*.oxt" 2> null
 [Winbatch_install_oxt]
 "$PathToUnopkg$" add --suppress-license --shared "$OxtDir$\%o%"
 
-[Linkfolder_install_desktopicon]
+[Linkfolder_create_desktoplink]
 set_basefolder common_desktopdirectory
 set_subfolder ""
 

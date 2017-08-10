@@ -9,7 +9,7 @@ id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 5.2.7
+version: 5.3.5
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -57,13 +57,10 @@ values: ["none", "post-deinstall.opsiinc"]
 default: ["none"]
 
 [ProductProperty]
-type: unicode
-name: desktopicon
-multivalue: False
-editable: False
-description: Create icon on desktop
-values: ["no", "yes"]
-default: ["no"]
+type: bool
+name: desktoplink
+description: Link icon on desktop?
+default: False
 
 [ProductProperty]
 type: unicode
@@ -93,6 +90,13 @@ values: ["no", "yes"]
 default: ["no"]
 
 [Changelog]
+dfn_libreoffice-still (5.3.5-1)
+        * neue Upstreamversion (Wechsel 5.2 zu 5.3)
+        * alte uib Copyrights (Überbleibsel von opsi-template) entfernt
+        * Desktopicon -> Desktoplink gem. o4i-Richtlinie angepasst
+        * o4i-Logo: Anzeigeaufruf nach common.opsiinc ausgelagert, eigenes Logo möglich
+ -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 10.08.2017
+
 dfn_libreoffice-still (5.2.7-1)
         * neue Upstreamversion
  -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 05.05.2017
