@@ -9,7 +9,7 @@ id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 5.3.5
+version: 5.3.7
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -58,13 +58,13 @@ default: ["none"]
 
 [ProductProperty]
 type: bool
-name: desktoplink
+name: desktop-link
 description: Link icon on desktop?
 default: False
 
 [ProductProperty]
 type: unicode
-name: msi-silent-option
+name: silent-option
 multivalue: False
 editable: False
 description: Un/Install MSI silent (/qb!) or very silent (/qn)
@@ -90,6 +90,11 @@ values: ["no", "yes"]
 default: ["no"]
 
 [Changelog]
+dfn_libreoffice-still (5.3.7-1)
+        * neue Upstreamversion
+        * kosmetische Korrektur (desktoplink -> desktop-link, msi-silent-option -> silent-option)
+-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 07.11.2017
+
 dfn_libreoffice-still (5.3.5-1)
         * neue Upstreamversion (Wechsel 5.2 zu 5.3)
         * alte uib Copyrights (Überbleibsel von opsi-template) entfernt

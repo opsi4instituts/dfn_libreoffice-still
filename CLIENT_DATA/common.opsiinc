@@ -25,7 +25,7 @@ DefStringList $ResultList32$
 DefStringList $ResultList64$
 DefVar $INST_SystemType$
 DefVar $MSVersion$
-DefVar $MsiSilentOption$
+DefVar $SilentOption$
 DefVar $UILangs$
 DefStringList $OxtList$
 DefVar $OxtDir$
@@ -37,9 +37,9 @@ Set $LogDir$ = "%opsiLogDir%"
 Set $INST_SystemType$ = GetSystemType
 Set $MSVersion$	 = GetMsVersionInfo
 
-Set $MsiSilentOption$ = GetProductProperty("msi-silent-option","/qb!")
+Set $SilentOption$ = GetProductProperty("silent-option","/qb!")
 Set $UILangs$ = GetProductProperty("ui-langs","de,en_GB")
-Set $DesktopLink$ = getProductProperty("desktoplink","false")
+Set $DesktopLink$ = getProductProperty("desktop-link","false")
 Set $ProductVersion$	= strPart("%installingProdVersion%", "1", calculate(strPos("%installingProdVersion%","-") + "-" + "1" ))
 
 ; ----------------------------------------------------------------

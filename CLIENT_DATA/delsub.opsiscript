@@ -57,7 +57,7 @@ if FileExists ( $InstallDir$ )
 endif
 
 [Winbatch_uninstall]
-msiexec /x $RegId$ $MsiSilentOption$ REBOOT=ReallySuppress
+msiexec /x $RegId$ $SilentOption$ REBOOT=ReallySuppress
 
 [Files_uninstall]
 delete -sf "$InstallDir$"
