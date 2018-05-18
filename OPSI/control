@@ -5,11 +5,11 @@ incremental: False
 
 [Product]
 type: localboot
-id: dfn_libreoffice-still
+id: repo_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 5.4.4
+version: 5.4.6
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -90,6 +90,17 @@ values: ["no", "yes"]
 default: ["no"]
 
 [Changelog]
+dfn_libreoffice-still (5.4.7-1)
+        * minor update, only .exe changed
+-- Detlef Krummel <krummel@gei.de>, 18.05.2018
+
+dfn_libreoffice-still (5.4.6-1)
+        * neue Upstreamversion
+-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 23.03.2018
+dfn_libreoffice-still (5.4.5-1)
+        * neue Upstreamversion
+-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 07.02.2018
+
 dfn_libreoffice-still (5.4.4-1)
         * neue Upstreamversion (Wechsel von Libreoffice Still aka stable von 5.3 zu 5.4)
 -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 07.02.2018
