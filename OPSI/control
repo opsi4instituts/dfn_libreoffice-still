@@ -5,11 +5,11 @@ incremental: False
 
 [Product]
 type: localboot
-id: repo_libreoffice-still
+id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 5.4.6
+version: 5.4.7
 priority: 0
 licenseRequired: False
 productClasses: 
