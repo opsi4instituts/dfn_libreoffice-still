@@ -1,17 +1,15 @@
-requiredWinstVersion >= "4.11.4.3"
+requiredWinstVersion >= "4.12.0.16"
 
-setloglevel = 6
-
-DefVar $RegPathUninstall$
 DefVar $MsiFile$
 DefVar $MsiFileHelpPack$
 DefVar $LogDir$
 DefVar $ProductId$
 DefVar $ProductVersion$
+DefVar $InstalledVersion$
 DefVar $MinimumSpace$
 DefVar $InstallDir$
 DefVar $ExitCode$
-DefVar $ErrorMsg$
+DefVar $ErrorString$
 DefVar $registerMso$
 DefVar $CustomPostInstall$
 DefVar $CustomPostUninstall$
@@ -19,11 +17,12 @@ DefVar $DesktopLink$
 DefVar $SearchPattern$
 DefVar $ProductName$
 DefVar $RegId$
+DefVar $RegBitScope$
 DefVar $PathToExe$
 DefVar $Launcher$
-DefStringList $ResultList32$
-DefStringList $ResultList64$
+DefStringList $ResultList$
 DefVar $INST_SystemType$
+DefVar $InstArch$
 DefVar $MSVersion$
 DefVar $SilentOption$
 DefVar $UILangs$
@@ -31,11 +30,25 @@ DefStringList $OxtList$
 DefVar $OxtDir$
 DefVar $PathToUnopkg$
 DefVar $CustomExtensions$
+DefVar $Bit$
+DefVar $BitFileName$
 
 Set $LogDir$ = "%opsiLogDir%"
 
 Set $INST_SystemType$ = GetSystemType
 Set $MSVersion$	 = GetMsVersionInfo
+
+set $InstArch$ = GetProductProperty("install-arch","system specific")
+;Default: 32
+Set $Bit$ = "32"
+Set $BitFileName$ = "x86"
+if (($INST_SystemType$ = "64 Bit System") and not ($InstArch$ = "32"))
+	Set $Bit$ = "64"
+	Set $BitFileName$ = "x64"
+endif
+if (($INST_SystemType$ = "x86 System") and ($InstArch$ = "64"))
+	Logwarning "Nice try: installing 64-bit-version on 32-bit-System. Ignoring your choice and using 32 bit version instead"
+endif
 
 Set $SilentOption$ = GetProductProperty("silent-option","/qb!")
 Set $UILangs$ = GetProductProperty("ui-langs","de,en_GB")
@@ -45,27 +58,24 @@ Set $ProductVersion$	= strPart("%installingProdVersion%", "1", calculate(strPos(
 ; ----------------------------------------------------------------
 ; - Please edit the following values                             -
 ; ----------------------------------------------------------------
-Set $ProductId$	= "libreoffice-still"
-Set $ProductName$       = "LibreOffice Still"
+Set $ProductId$			= "libreoffice-still"
+Set $ProductName$		= "LibreOffice Still"
 Set $SearchPattern$ 	= "LibreOffice"
-Set $MinimumSpace$	= "600 MB"
-Set $RegPathUninstall$	= "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-Set $MsiFile$		= "LibreOffice_" + $ProductVersion$ + "_Win_x64.msi"
-Set $MsiFileHelpPack$	= "LibreOffice_" + $ProductVersion$ + "_Win_x64_helppack_de.msi"
+Set $MinimumSpace$		= "600 MB"
+Set $MsiFile$			= "LibreOffice_" + $ProductVersion$ + "_Win_" + $BitFileName$ + ".msi"
+Set $MsiFileHelpPack$	= "LibreOffice_" + $ProductVersion$ + "_Win_" + $BitFileName$ + "_helppack_de.msi"
  ;die .exe, welche als Desktopicon hinzugefügt werden kann.
 Set $Launcher$          = "\program\soffice.exe"
-Set $OxtDir$	= "%ScriptPath%\custom\extensions"
+Set $OxtDir$			= "%ScriptPath%\custom\extensions"
 ; ----------------------------------------------------------------
 
-include_append "check_msi_exitcode.opsiinc"
-include_append "section_sub_search_registry32_uninstall_keys.opsiinc"
-include_append "section_sub_search_registry64_uninstall_keys.opsiinc"
+; exitcode library von UIB (siehe C:\program files(x86)\opsi.org\opsi-client-agent\opsi-winst\lib) mit 'local functions'
+importLib "uib_exitcode.opsiscript"
+; Library registry search uninstall keys (local functions)
+importLib "func_search_registry_uninstall_keys.opsiinc"
 
 if not ($MSVersion$ = "6.1" OR $MSVersion$ = "10.0")
 	Logwarning "Only tested with windows 7 and 10! Please report to the maintainer successful installation on other windows versions."		
-endif
-if not ($INST_SystemType$ = "64 Bit System")
-	Logwarning "Only tested with 64 bit version! Please report to the maintainer successful installation on other windows versions."
 endif
 
 comment "Show product picture"

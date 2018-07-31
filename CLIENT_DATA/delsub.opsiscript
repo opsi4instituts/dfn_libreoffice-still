@@ -1,22 +1,16 @@
-; Parameter: $SearchPattern$
-; separate ResultList32 bzw. 64 damit später die InstallDir aus dem richtigen Registryzweig geholt werden kann
-Sub_search_registry64_uninstall_keys
-Sub_search_registry32_uninstall_keys
-; Rückgabewert: $ResultList$ gefundene Einträge
+; Ergebnis ist StringList (mehrere Einträge möglich);
+; in einer Zeile werden drei Ergebnisse mit "|" abgetrennt geliefert: Registrykey (mit Pfad) | Bereich Registry (kann direkt getRegistryValue übergeben werden | DisplayName
+; z.B. HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Test64|64bit|Test Registry Entry64
+Set $ResultList$ = SearchRegistryUninstallKeys($SearchPattern$)
 
-if ( count ( $ResultList32$ ) = "0" AND count( $ResultList64$ ) = "0" )
+if ( count ( $ResultList$ ) = "0" )
 	comment "No installations of " + $SearchPattern$ + " found in registry"
 else
 	comment "Found at least one installation of " + $SearchPattern$ + " in registry, try to deinstall"
 
 	; mehr als ein Paket zu deinstallieren (Programm und Hilfe haben separate Registryeinträge)
 	comment "Uninstalling found programs"
-	if not ( count ( $ResultList32$ ) = "0" )
-		for %s% in $ResultList32$ do Sub_uninstall32
-	endif
-	if not ( count ( $ResultList64$ ) = "0"  )
-		for %s% in $ResultList64$ do Sub_uninstall64
-	endif
+	for %r% in $ResultList$ do Sub_uninstall
 	
 	if $DesktopLink$ = "true"
 		comment "Delete common desktop link"
@@ -32,24 +26,18 @@ else
 	endif
 endif
 
-[Sub_uninstall32]
-Set $InstallDir$ =  GetRegistryStringValue32("[" + $RegPathUninstall$ + "\%s%] InstallLocation")
-Set $RegId$ = "%s%"
+[Sub_uninstall]
+Set $RegId$ = takeString (0,splitString("%r%", '|'))
+Set $RegBitScope$ = takeString (1,splitString("%r%", '|'))
+Set $InstallDir$ = GetRegistryValue($RegId$, "InstallLocation", $RegBitScope$)
+; bei MSI wird nur der RegKey ohne Pfad benötigt
+Set $RegId$ = takeString (-1,splitString($RegId$,"\"))
 
 Winbatch_uninstall
-sub_check_exitcode
-
-; evtl. noch vorhandende Reste des Installationsverzeichnisses löschen
-if FileExists ( $InstallDir$ )
-	Files_uninstall
+Set $ExitCode$ = getLastExitCode
+if StringToBool(isMsiExitcodeFatal($ExitCode$, "True", $ErrorString$))
+	isFatalError
 endif
-
-[Sub_uninstall64]
-Set $InstallDir$ =  GetRegistryStringValue64("[" + $RegPathUninstall$ + "\%s%] InstallLocation")
-Set $RegId$ = "%s%"
-
-Winbatch_uninstall
-sub_check_exitcode
 
 ; evtl. noch vorhandende Reste des Installationsverzeichnisses löschen
 if FileExists ( $InstallDir$ )

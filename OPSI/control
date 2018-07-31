@@ -1,7 +1,6 @@
 [Package]
-version: 1
+version: 2
 depends: 
-incremental: False
 
 [Product]
 type: localboot
@@ -89,7 +88,23 @@ description: Install Custom Extensions (*.oxt files) from /var/lib/opsi/depot/df
 values: ["no", "yes"]
 default: ["no"]
 
+[ProductProperty]
+type: unicode
+name: install-arch
+multivalue: True
+editable: False
+description: Install 32- or 64-bit version of software
+values: ["32", "64", "system specific"]
+default: ["system specific"]
+
 [Changelog]
+dfn_libreoffice-still (5.4.7-2)
+	* neue Registrysuche (https://github.com/opsi4instituts/lib, winst-Version 4.12.0.16 Voraussetzung)
+	* x86-Installer sowie ProduktProperty "install-arch" hinzugefügt
+	* Verwendung uib_exitcode (local function)
+	* Check Version (Paket <-> Installation)
+-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 30.07.2018
+
 dfn_libreoffice-still (5.4.7-1)
         * minor update, only .exe changed
 -- Detlef Krummel <krummel@gei.de>, 18.05.2018
@@ -97,6 +112,7 @@ dfn_libreoffice-still (5.4.7-1)
 dfn_libreoffice-still (5.4.6-1)
         * neue Upstreamversion
 -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 23.03.2018
+
 dfn_libreoffice-still (5.4.5-1)
         * neue Upstreamversion
 -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 07.02.2018

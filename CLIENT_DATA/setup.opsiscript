@@ -12,7 +12,7 @@ else
 		Sub "%ScriptPath%\delsub.opsiscript"
 	endif
 
-	Message "Installing %installingProdName% (%installingProdVersion%) 64 Bit..."
+	Message "Installing %installingProdName% (%installingProdVersion%) " + $Bit$ +" Bit..."
 
 	comment "Start setup program"
 	Set $registerMso$ = getProductProperty("register-mso","")
@@ -24,24 +24,42 @@ else
 	
 	comment "Installing the main Program for LibreOffice"
 	Winbatch_install_main
-	sub_check_exitcode
+	Set $ExitCode$ = getLastExitCode
+	if stringToBool(isMsExitcodeFatal($ExitCode$, "True", $ErrorString$))
+		isFatalError
+	endif
 	
 	comment "Installing the Help-Pack for LibreOffice"
 	Winbatch_install_help
-	sub_check_exitcode
+	Set $ExitCode$ = getLastExitCode
+	if stringToBool(isMsExitcodeFatal($ExitCode$, "True", $ErrorString$))
+		isFatalError
+	endif
 	
 	comment "Test for installation success"
-	
-	; Parameter: $SearchPattern$: Suchbegriff in Registry
-	Sub_search_registry64_uninstall_keys
-	; Rückgabewert: $ResultList64$ gefundene Einträge
-	if ( count ($ResultList64$) = "0" )
-		logError "Fatal: After Installation " + $ProductName$ + " could not be found in " + $RegPathUninstall$
+
+	; Ergebnis ist StringList (mehrere Einträge möglich);
+	; in einer Zeile werden drei Ergebnisse mit "|" abgetrennt geliefert: Registrykey (mit Pfad) | Bereich Registry (kann direkt getRegistryValue übergeben werden | DisplayName
+	; z.B. HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Test64|64bit|Test Registry Entry64
+	Set $ResultList$ = SearchRegistryUninstallKeys($SearchPattern$)
+
+	if ( count ($ResultList$) = "0" )
+		logError "Fatal: After Installation " + $ProductName$ + " could not be found in registry"
 		isFatalError
 	else
-		Set $RegId$ = takeString(0, $ResultList64$)
+		; gibt zwei Einträge (Programm & Hilfe), aber egal, in beiden ist InstallLocation bzw. DisplayVersion enthalten
+		Set $RegId$ = takeString (0,splitString(takeString(0,$ResultList$), '|'))
+		Set $RegBitScope$ = takeString (1,splitString(takeString(0,$ResultList$), '|'))
+
+		comment "Check version"
+		Set $InstalledVersion$ = GetRegistryValue($RegId$, "DisplayVersion", $RegBitScope$)
+		if not (contains($InstalledVersion$, $ProductVersion$))
+			LogError "Wrong version number found, something went wrong."
+			isFatalError
+		endif
+
 		comment "Get 'InstallLocation' from registry for path to exe"
-		Set $InstallDir$ = GetRegistryStringValue64("[" + $RegPathUninstall$ + "\" + $RegId$ + "] InstallLocation")
+		Set $InstallDir$ = GetRegistryValue($RegId$, "InstallLocation", $RegBitScope$)
 		Set $PathToExe$ = $InstallDir$ + $Launcher$
 		Set $PathToUnopkg$ = $InstallDir$ + "\program\unopkg.exe"
 		
