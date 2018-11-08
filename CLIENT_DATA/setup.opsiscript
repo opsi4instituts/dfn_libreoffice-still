@@ -25,14 +25,14 @@ else
 	comment "Installing the main Program for LibreOffice"
 	Winbatch_install_main
 	Set $ExitCode$ = getLastExitCode
-	if stringToBool(isMsExitcodeFatal($ExitCode$, "True", $ErrorString$))
+	if stringToBool(isMsiExitcodeFatal($ExitCode$, "True", $ErrorString$))
 		isFatalError
 	endif
 	
 	comment "Installing the Help-Pack for LibreOffice"
 	Winbatch_install_help
 	Set $ExitCode$ = getLastExitCode
-	if stringToBool(isMsExitcodeFatal($ExitCode$, "True", $ErrorString$))
+	if stringToBool(isMsiExitcodeFatal($ExitCode$, "True", $ErrorString$))
 		isFatalError
 	endif
 	

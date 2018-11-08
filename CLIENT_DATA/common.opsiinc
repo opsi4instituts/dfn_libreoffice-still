@@ -70,7 +70,7 @@ Set $OxtDir$			= "%ScriptPath%\custom\extensions"
 ; ----------------------------------------------------------------
 
 ; exitcode library von UIB (siehe C:\program files(x86)\opsi.org\opsi-client-agent\opsi-winst\lib) mit 'local functions'
-importLib "uib_exitcode.opsiscript"
+importLib "uib_exitcode.opsiscript::isMsiExitcodeFatal"
 ; Library registry search uninstall keys (local functions)
 importLib "func_search_registry_uninstall_keys.opsiinc"
 

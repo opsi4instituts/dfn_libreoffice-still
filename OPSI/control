@@ -1,5 +1,5 @@
 [Package]
-version: 1
+version: 3
 depends: 
 
 [Product]
@@ -8,7 +8,7 @@ id: dfn_libreoffice-still
 name: LibreOffice Still
 description: Office-Umgebung mit den Hauptkomponenten 'Writer' (Textverarbeitung), 'Calc' (Tabellenkalkulation), 'Impress' (Präsentation), 'Draw' (Vektorzeichnungen) und 'Base' (Datenbank); international standardisiertes Dateiformat 'OpenDocument Format' (ODF); Import- und Exportfilter für Microsoft Office
 advice: 
-version: 6.0.6
+version: 6.0.7
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -98,6 +98,18 @@ values: ["32", "64", "system specific"]
 default: ["system specific"]
 
 [Changelog]
+dfn_libreoffice-still (6.0.7-3)
+    * Fix Typo "isMsiExitcodeFatal" anstatt "isMsExitcodeFatal" (setup.opsiscript) und Einschränkung bei importLib (common.opsiinc)
+-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 08.11.2018
+
+dfn_libreoffice-still (6.0.7-2)
+    * neues o4i-Logo
+-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 07.11.2018
+
+dfn_libreoffice-still (6.0.7-1)
+    * neue Upstreamversion - Upgrade auf LibreOffice Still 6.0.7
+-- Michael Decker <m.decker@fz-juelich.de>, 06.11.2018
+
 dfn_libreoffice-still (6.0.6-1)
     * Urlaubsvertretung & Downgrade zurück zu 6.0.6 (= "still", Download-Webseite & notify war vorübergehend fehlerhaft)
 -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 21.08.2018
